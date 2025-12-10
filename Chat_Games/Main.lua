@@ -9,7 +9,7 @@ local function help_rps()
     -- 
 end
 
-local rps = require "rps"
+local rps = require "RPS"
 
 function rps:requestMove(player)
     local other_player = self:otherPlayer(player)
