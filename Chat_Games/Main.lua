@@ -6,7 +6,7 @@ local ccstring = require "cc.strings"
 local is_emu = not not ccemux
 
 local function help_rps()
-    -- 
+    print("Help command received")
 end
 
 local rps = require "RPS"
@@ -116,6 +116,8 @@ while true do
             else
                 local target = command[2]
 
+                print("Generic from",sender,"to",target)
+                    
                 -- Validate with Player Detector
 
                 local players = {sender,target}
@@ -124,14 +126,16 @@ while true do
                 local game = games[players[1]] and games[players[1]][players[2]]
 
                 if not game then
-                    -- Ask the 
+                    print("No game found.")
+                else
+                    print("Game found!")    
                 end
             end
         elseif (#command == 4) then
             local target = command[2]
-            --Validate
 
             if (command[3] == "move") then
+                print(sender,"is sending a move to",target)
                 -- I forsee problems here...
                 local move_key = tonumber(command[4])
 
@@ -148,6 +152,7 @@ while true do
                 game:sendMove(sender,move_key)
             elseif (string.lower(command[3]) == "new") then
                 local points_to_win = tonumber(command[4])
+                print(sender,"is starting a game with",target)
 
                 if not points_to_win then goto continue end
 
@@ -158,6 +163,8 @@ while true do
                 games[players[1]][players[2]] = rps:new(sender,target,points_to_win)
 
                 local game = games[players[1]][players[2]]
+
+                pp.pretty_print(game)
 
                 -- send move requests
 
